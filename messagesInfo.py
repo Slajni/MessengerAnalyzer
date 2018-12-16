@@ -18,3 +18,17 @@ def combineFiles(list, outfileName="result.html"):
                 for line in infile:
                     outfile.write(line)
     return outfile
+
+
+def getUsers(file):
+    seen_users = set()
+
+    def users(tag):
+        username = tag.get('title')
+        if username and 'message' in tag.get('class', ''):
+            seen_users.add(username)
+            return True
+
+    soup = BeautifulSoup(file, 'html.parser')
+    soup.find_all(users)
+    return seen_users
