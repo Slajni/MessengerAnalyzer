@@ -40,6 +40,10 @@ def getMessageData(file):
     soup = BeautifulSoup(file, 'html.parser')
     for name in getUsers(soup):
         for div in soup.find_all("div",{"title":name}):
-            data.append([name,dt.strptime(div["time"],"%m/%d/%Y %I:%M:%S %p").strftime("%m/%d/%Y"),div.find('span').text])
+            data.append([name,dt.strptime(div["time"],"%m/%d/%Y %I:%M:%S %p"),div.find('span').text])
+
+    data = sorted(data, key=itemgetter(1))
+    for item in data:
+        item[1] = item[1].strftime("%d/%m/%Y")
 
     return data
